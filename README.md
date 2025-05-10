@@ -1,4 +1,4 @@
-# Filmliste Backend
+# Filmliste Frontend
 
 ## Team-Mitglieder:
 - Philipp Kumaigorodskii
