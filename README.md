@@ -2,11 +2,10 @@
 
 ## Team-Mitglieder:
 - Philipp Kumaigorodskii
-- 
 
 ## Projektbeschreibung
 
-Die **Filmliste-Super-App** ist eine Webanwendung zur Verwaltung persönlicher Filmsammlungen.  
+Die **Filmliste App** ist eine Webanwendung zur Verwaltung persönlicher Filmsammlungen.  
 Nutzer:innen können Filme hinzufügen, bearbeiten, filtern und organisieren.  
 Ziel ist eine einfache, übersichtliche Lösung zur Katalogisierung eigener Lieblingsfilme.
 

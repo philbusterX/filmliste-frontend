@@ -1,27 +1,43 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
-const filme = ref([
-  { id: 1, titel: 'Inception', regisseur: 'Christopher Nolan', erscheinungsjahr: 2010, genre: 'Sci-Fi' },
-  { id: 2, titel: 'The Dark Knight', regisseur: 'Christopher Nolan', erscheinungsjahr: 2008, genre: 'Action' },
-  { id: 3, titel: 'Interstellar', regisseur: 'Christopher Nolan', erscheinungsjahr: 2014, genre: 'Sci-Fi' },
-]);
+const filme = ref([]);
+
+async function ladeFilme() {
+  try {
+    const response = await fetch('http://localhost:8080/movies');
+
+    if (!response.ok) {
+      throw new Error(`HTTP-Fehler! Status: ${response.status}`);
+    }
+
+    const datenVomBackend = await response.json();
+    filme.value = datenVomBackend;
+
+  } catch (error) {
+    console.error("Fehler beim Laden der Filme:", error);
+  }
+}
+
+onMounted(() => {
+  ladeFilme();
+});
 </script>
 
 <template>
-  <div class="film-liste-container">
+  <div>
     <h2>Meine Film Liste</h2>
-    <ul v-if="filme.length > 0">
-      <li v-for="film in filme" :key="film.id" class="film-eintrag">
-        <h3>{{ film.titel }}</h3>
-        <p>Regisseur: {{ film.regisseur }}</p>
-        <p>Jahr: {{ film.erscheinungsjahr }} | Genre: {{ film.genre }}</p>
+    <div v-if="filme.length === 0">
+      <p>Lade Filme...</p>
+    </div>
+    <ul v-else>
+      <li v-for="film in filme" :key="film.id">
+        <h3>{{ film.title }}</h3>
+        <p>Erscheinungsjahr: {{ film.year }} | Genre: {{ film.genre }}</p>
+        <p>Rating: {{ film.rating }}</p>
+        <p>Gesehen: {{ film.watched ? 'Ja' : 'Nein' }}</p>
+        <p>Favorit: {{ film.favorite ? 'Ja' : 'Nein' }}</p>
       </li>
     </ul>
-    <p v-else>
-      Keine Filme in der Liste vorhanden.
-    </p>
   </div>
 </template>
-
-
