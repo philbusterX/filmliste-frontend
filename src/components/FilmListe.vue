@@ -1,7 +1,19 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import type { Ref } from 'vue';
 
-const filme = ref([]);
+interface Movie {
+  id: number;
+  title: string;
+  year: number;
+  genre: string;
+  rating: number;
+  watched: boolean;
+  favorite: boolean;
+}
+
+const filme: Ref<Movie[]> = ref([]);
+
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
 async function ladeFilme() {
@@ -12,7 +24,7 @@ async function ladeFilme() {
       throw new Error(`HTTP-Fehler! Status: ${response.status}`);
     }
 
-    const datenVomBackend = await response.json();
+    const datenVomBackend = await response.json() as Movie[];
     filme.value = datenVomBackend;
 
   } catch (error) {
@@ -32,6 +44,7 @@ onMounted(() => {
       <p>Lade Filme...</p>
     </div>
     <ul v-else>
+      {/* Das Template bleibt gleich, aber TypeScript weiß jetzt, was 'film' ist */}
       <li v-for="film in filme" :key="film.id">
         <h3>{{ film.title }}</h3>
         <p>Erscheinungsjahr: {{ film.year }} | Genre: {{ film.genre }}</p>
