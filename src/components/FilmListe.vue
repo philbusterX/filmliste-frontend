@@ -1,11 +1,12 @@
-<script setup lang="ts">
+<script setup>
 import { ref, onMounted } from 'vue';
 
 const filme = ref([]);
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
 async function ladeFilme() {
   try {
-    const response = await fetch('http://localhost:8080/movies');
+    const response = await fetch(`${apiBaseUrl}/movies`);
 
     if (!response.ok) {
       throw new Error(`HTTP-Fehler! Status: ${response.status}`);
